@@ -1,0 +1,35 @@
+# Install dependencies
+apt-get update && \
+      apt-get -y install sudo
+sudo apt-get update
+Rsudo apt-get install build-essential curl zlib1g-dev libbz2-dev libcurl4-openssl-dev librdkafka-dev -y
+
+mkdir ~/src
+cd ~/src/
+curl -LO https://github.com/LibtraceTeam/wandio/archive/refs/tags/4.2.4-1.tar.gz
+tar zxf 4.2.4-1.tar.gz
+cd wandio-4.2.4-1/
+sudo apt-get install libtool-bin -y
+sudo apt-get install autotools-dev -y
+sudo apt-get install automake -y
+
+sed 's/([^)]*)//g' bootstrap.sh > bootstrap1.sh
+sed 's/||//g' bootstrap1.sh > bootstrap2.sh
+sed 's/R/libtoolize/g' bootstrap2.sh > bootstrap3.sh
+chmod +x bootstrap3.sh
+./bootstrap3.sh
+./configure
+make
+
+sudo make install
+sudo ldconfig
+cd ~/src/
+curl -LO https://github.com/CAIDA/libbgpstream/releases/download/v2.2.0/libbgpstream-2.2.0.tar.gz
+tar zxf libbgpstream-2.2.0.tar.gz
+cd libbgpstream-2.2.0/
+sed -i 's/pthread_yield/sched_yield/g' configure
+./configure
+make
+make check
+sudo make install
+sudo ldconfig
