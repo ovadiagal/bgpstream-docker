@@ -1,9 +1,9 @@
 # bgpstream-docker
 This is a Docker Image w/ BGPStream + PyBGPStream pre-installed.
 They were both built from source (with some minor tweaks):
-- Removed checks for deprecated automake + libtool versions
+- Removed broken checks for automake + libtool versions
 - Replaced usages of glibtoolize with libtoolize
-- Replaced checks for pthread_yield with sched_yield
+- Replaced checks for pthread_yield with sched_yield as it is nonstandard
 
 To spin up the container, just run `./bgp_docker.sh`. You will have access to the directory in which the script is placed from within the image, so you can generate some nice txt dumps on your local filesystem, or write python code in your text editor of choice, and then run it inside the container. There's a snippet `pybgpstream-demo.py` that you can run to verify that everything works correctly.
 
